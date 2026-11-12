@@ -1,0 +1,456 @@
+---
+title: "Summary Tables with gtsummary"
+subtitle: "M08 Reflection – Revealjs Presentation"
+author: "Pei Yun Chuang"
+institute: "Cal Poly Pomona"
+date: "`r Sys.Date()`"
+format:
+  revealjs:
+    theme: serif
+    width: 1600
+    height: 900
+    footer: "M08 Reflection | Summary Tables with gtsummary"
+    transition: slide
+    transition-speed: default
+    incremental: false
+    toc: true
+    toc-depth: 1
+    slide-number: true
+    scrollable: true
+    smaller: true
+    code-fold: false
+    code-overflow: wrap
+    number-sections: false
+    number-depth: 5
+    embed-resources: true
+    css: styles.css
+editor: visual
+execute:
+  echo: true
+  freeze: auto
+---
+
+# Introduction
+
+## M08 Reflection
+
+In this module, I learned how the **gtsummary** package can turn statistical analyses into clear and professional tables.
+
+The module helped me connect three important parts of data analysis:
+
+::: incremental
+-   Choosing an appropriate statistical method
+-   Running the analysis in R
+-   Communicating the results in a presentation-ready table
+:::
+
+I also considered how these techniques could be applied to my team's MSDM CEP project for **PhD Orthodontics**.
+
+::: notes
+This presentation summarizes what I learned about gtsummary and how I can apply it to the PhD Orthodontics CEP project.
+:::
+
+# Prompt 1
+
+## Essay Prompt 1
+
+> **In Step 1, you have seen how to create a summary table and modify it for various statistical analyses. Summarize the package's capabilities as explained by the speaker. How may the {gtsummary} benefit you for your school work or career?**
+
+## What I Learned About gtsummary
+
+The **gtsummary** package is designed to create clean and presentation-ready statistical tables directly from data and statistical models in R.
+
+From the lecture, I learned that `tbl_summary()` can summarize both categorical and continuous variables. The table can also be divided by groups, and additional statistics can be added to compare those groups.
+
+Some important functions introduced in the lecture included:
+
+::: incremental
+-   `tbl_summary()` for descriptive statistics
+-   `add_p()` for statistical comparisons
+-   `add_difference()` for differences between groups
+-   `tbl_cross()` for cross-tabulations
+-   `tbl_regression()` for regression results
+-   `as_gt()` for additional table formatting
+:::
+
+## Statistical Analyses
+
+One thing I found useful is that gtsummary is not limited to descriptive statistics.
+
+The lecture demonstrated how it can be used with different statistical analyses, including:
+
+::::: columns
+::: {.column width="50%"}
+**Group Comparisons**
+
+-   Wilcoxon rank-sum test
+-   Welch two-sample t-test
+-   Chi-square test
+-   ANCOVA
+:::
+
+::: {.column width="50%"}
+**Modeling**
+
+-   Logistic regression
+-   Multiple linear regression
+-   Univariate regression
+-   Survey data analysis
+:::
+:::::
+
+This makes the package useful because the statistical analysis and the presentation of the results can be connected in the same R workflow.
+
+## Benefits for My School Work
+
+For my school work, I think gtsummary can save a significant amount of time.
+
+Instead of copying statistical results from R and manually creating a table in another program, I can create a professional table directly from the analysis.
+
+This also reduces the possibility of transcription errors because the values in the table come directly from the model.
+
+Another benefit is reproducibility. If the dataset changes, I can run the code again and automatically update the results and tables.
+
+## Benefits for My Career
+
+I am studying digital marketing, so I expect to work with marketing data such as customer surveys, website behavior, advertising performance, conversion behavior, and customer segments.
+
+In a professional environment, simply running an analysis is not enough. The results also need to be communicated clearly to managers, clients, and other stakeholders.
+
+I think gtsummary can help me convert complicated statistical output into tables that are easier for non-technical audiences to understand.
+
+::: aside
+For me, the biggest advantage is the connection between statistical analysis and communication.
+:::
+
+# Prompt 2
+
+## Essay Prompt 2
+
+> **In Step 2, you watched the extended presentation of the {gtsummary} package by Dr. Daniel Sjoberg, the creator of the package.**
+
+# Prompt 2.1
+
+## Essay Prompt 2.1
+
+> **How does gtsummary differ from gt and gtExtras?**
+
+## gtsummary vs. gt vs. gtExtras
+
+Although these packages can work together, they have different purposes.
+
+| Package | Main Purpose |
+|----|----|
+| **gtsummary** | Summarizes datasets and statistical models into presentation-ready statistical tables |
+| **gt** | Builds and formats display tables |
+| **gtExtras** | Provides additional formatting and visualization options for gt tables |
+
+The main difference is that **gtsummary understands statistical analysis**. For example, it can take a regression model and use `tbl_regression()` to organize coefficients, confidence intervals, and p-values into a readable table.
+
+`gt`, in comparison, focuses more on how a table is displayed and formatted. `gtExtras` extends the formatting capabilities of gt by providing additional table presentation tools.
+
+## How They Work Together
+
+A useful workflow can be:
+
+```{r}
+#| eval: false
+library(gtsummary)
+library(gt)
+
+model_table <- model |>
+  tbl_regression() |>
+  as_gt()
+```
+
+In this example, **gtsummary organizes the statistical results**, while **gt can be used to further customize the final appearance**.
+
+# Prompt 2.2
+
+## Essay Prompt 2.2
+
+> **Give three things you learned newly that were not explained in the lecture in Step 1.**
+
+## New Learning 1 – Efficient Reproducible Tables
+
+One idea that became clearer to me from the extended presentation was how much gtsummary can improve a reproducible workflow.
+
+Instead of manually rebuilding tables after an analysis changes, the table can remain connected to the underlying data and model. If the data or model changes, the table can be regenerated from the same code.
+
+## New Learning 2 – Statistical Results and Presentation Are Connected
+
+Another thing I learned was that a statistical table is not only an output. The way results are organized and labeled is part of communicating the analysis.
+
+For example, reference groups, variable labels, confidence intervals, and p-values can be organized so that a reader does not have to interpret raw R model output.
+
+## New Learning 3 – Customization Without Rebuilding the Analysis
+
+A third thing I learned was the flexibility of the gtsummary workflow.
+
+A user can modify labels, headers, statistics, and formatting while keeping the original statistical model intact. This separation is useful because I can focus on the analysis first and then improve how the results are presented without manually rebuilding the table.
+
+# Prompt 3
+
+## Essay Prompt 3
+
+> **Apply what you learned to your MSDM CEP data. Choose two appropriate variables for cross-tabulation and show if the two variables are associated or not. Use appropriate statistics to test if the two variables are associated. Code, produce the table, and interpret the result.**
+
+## CEP Application: Cross-Tabulation
+
+For our Group 6 PhD Orthodontics CEP project, one research question examines differences between prospective orthodontic decision-makers in **San Gabriel and Chino Hills**.
+
+Based on our Data Analysis Table, I selected:
+
+-   **City of Residence (S3)** – San Gabriel or Chino Hills
+-   **Preferred Information Language (Q3)**
+
+Both variables are categorical, making them appropriate for cross-tabulation.
+
+### Research Question
+
+**Is preferred information language associated with the respondent's city of residence?**
+
+### Hypotheses
+
+**H0:** City of residence and preferred information language are independent.
+
+**H1:** City of residence and preferred information language are associated.
+
+## Cross-Tabulation Code
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(gtsummary)
+
+cep_data |>
+  tbl_cross(
+    row = S3,
+    col = Q3,
+    percent = "row"
+  ) |>
+  add_p(
+    test = everything() ~ "chisq.test",
+    pvalue_fun = label_style_pvalue(digits = 3)
+  ) |>
+  bold_labels()
+```
+
+## Appropriate Statistical Test
+
+The **Pearson Chi-square test of independence** is appropriate because both variables are categorical.
+
+If the sample contains small expected cell counts, **Fisher's exact test** would be more appropriate.
+
+```{r}
+#| eval: false
+cep_data |>
+  tbl_cross(
+    row = S3,
+    col = Q3,
+    percent = "row"
+  ) |>
+  add_p(test = everything() ~ "fisher.test")
+```
+
+## Interpretation
+
+At this stage of the CEP project, the available Group 6 document provides the planned variables and statistical analysis but does not contain respondent-level survey observations.
+
+Therefore, an actual Chi-square statistic and p-value cannot yet be calculated without inventing data.
+
+-   **p \< .05:** Reject H0. There is evidence that city of residence and preferred information language are associated.
+-   **p ≥ .05:** Fail to reject H0. There is not sufficient evidence of an association between the two variables.
+
+This analysis could help PhD Orthodontics determine whether language preferences differ between the San Gabriel and Chino Hills markets.
+
+# Prompt 4
+
+## Essay Prompt 4
+
+> **Using the MSDM CEP data, run multiple regression. The dependent variable can be continuous or dichotomous. Regress a dependent variable on a set of independent variables. Code, produce the table, and interpret the result.**
+
+## CEP Application: Multiple Regression
+
+Our second CEP research question asks how website and content evaluations are associated with respondents' intention to request a consultation with PhD Orthodontics.
+
+Based on our Data Analysis Table, I selected **Consultation Request Intention** as the dependent variable.
+
+The independent variables are:
+
+::: incremental
+1.  Information Quality
+2.  Message Credibility
+3.  Provider Trustworthiness
+4.  Professionalism
+:::
+
+## Variables
+
+::::: columns
+::: {.column width="45%"}
+### Dependent Variable
+
+**Consultation Request Intention**
+
+Q9:
+
+-   CI1
+-   CI2
+-   CI3
+:::
+
+::: {.column width="55%"}
+### Independent Variables
+
+**Information Quality:** IQ1–IQ4
+
+**Message Credibility:** MC1–MC3
+
+**Provider Trustworthiness:** TR1–TR3
+
+**Professionalism:** PR1–PR3
+:::
+:::::
+
+## Preparing Composite Scores
+
+```{r}
+#| eval: false
+cep_model_data <- cep_data |>
+  mutate(
+    information_quality =
+      rowMeans(across(c(IQ1, IQ2, IQ3, IQ4)), na.rm = TRUE),
+    message_credibility =
+      rowMeans(across(c(MC1, MC2, MC3)), na.rm = TRUE),
+    trustworthiness =
+      rowMeans(across(c(TR1, TR2, TR3)), na.rm = TRUE),
+    professionalism =
+      rowMeans(across(c(PR1, PR2, PR3)), na.rm = TRUE),
+    consultation_intention =
+      rowMeans(across(c(CI1, CI2, CI3)), na.rm = TRUE)
+  )
+```
+
+## Multiple Linear Regression
+
+$$
+Consultation\ Intention =
+\beta_0 +
+\beta_1(Information\ Quality) +
+\beta_2(Message\ Credibility) +
+\beta_3(Trustworthiness) +
+\beta_4(Professionalism) +
+\epsilon
+$$
+
+```{r}
+#| eval: false
+model <- lm(
+  consultation_intention ~
+    information_quality +
+    message_credibility +
+    trustworthiness +
+    professionalism,
+  data = cep_model_data
+)
+
+summary(model)
+```
+
+## Publishable Regression Table
+
+```{r}
+#| eval: false
+model |>
+  tbl_regression(
+    intercept = TRUE,
+    estimate_fun = label_style_sigfig(digits = 2),
+    pvalue_fun = label_style_pvalue(digits = 3),
+    label = list(
+      information_quality ~ "Information Quality",
+      message_credibility ~ "Message Credibility",
+      trustworthiness ~ "Provider Trustworthiness",
+      professionalism ~ "Professionalism"
+    )
+  ) |>
+  add_glance_table(
+    include = c(r.squared, adj.r.squared, nobs)
+  ) |>
+  bold_labels()
+```
+
+## Regression Interpretation
+
+The regression coefficients will show the expected change in **consultation intention** associated with a one-unit increase in each website evaluation variable while holding the other predictors constant.
+
+For example, a positive and statistically significant coefficient for **Provider Trustworthiness** would indicate that higher perceived trustworthiness is associated with higher consultation intention after accounting for information quality, message credibility, and professionalism.
+
+A p-value below .05 would be interpreted as evidence of a statistically significant association. The model's $R^2$ will indicate how much variation in consultation intention is explained collectively by the predictors.
+
+## Current Data Limitation
+
+The current Group 6 Data Analysis Table identifies the constructs, survey items, measurement scales, and proposed statistical tests. However, it does not contain respondent-level survey observations.
+
+Because of this, actual regression coefficients, confidence intervals, p-values, and $R^2$ values cannot be calculated yet.
+
+Reporting numerical results without the respondent-level dataset would create results that were not actually observed.
+
+# Key Takeaways
+
+## What I Learned
+
+A complete analysis should:
+
+::: incremental
+1.  Identify the correct variables and their measurement levels.
+2.  Select an appropriate statistical method.
+3.  Run the analysis reproducibly.
+4.  Present the results clearly.
+5.  Interpret the findings for the intended audience.
+:::
+
+The gtsummary package connects these steps by allowing statistical results to be transformed into professional tables using reproducible R code.
+
+## Application to PhD Orthodontics
+
+For our CEP project, **cross-tabulation** can identify whether information preferences vary across geographic markets.
+
+**Multiple regression** can help identify which website evaluations are most strongly associated with consultation intention.
+
+These insights could help PhD Orthodontics make more evidence-based decisions about website content and its expansion into Chino Hills.
+
+# References
+
+## References
+
+Jung, J. (2026). *Summary table with gtsummary: Preparation for MSDM CEP*. Cal Poly Pomona.
+
+Sjoberg, D. D., et al. *gtsummary: Presentation-ready data summary and analytic result tables*. R package.
+
+PhD Orthodontics Group 6. (2026). *CEP 12 – Data Analysis Table for PhD Orthodontics*.
+
+# Appendix
+
+## Appendix: Project Links
+
+**GitHub Repository:**\
+\[ADD GITHUB REPOSITORY LINK HERE\]
+
+**GitHub Pages:**\
+\[ADD GITHUB PAGES LINK HERE\]
+
+## Appendix: Packages
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(gt)
+library(gtsummary)
+```
+
+## Appendix: Final Reflection
+
+The most important lesson I learned from this module is that statistical communication should be considered part of the analysis rather than something added at the end.
+
+Using Quarto and gtsummary together allows the analysis, tables, interpretation, and presentation to remain connected in one reproducible workflow.
